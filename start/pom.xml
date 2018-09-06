@@ -19,20 +19,12 @@
         <packaging.type>usr</packaging.type>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>features</id>
-            <name>features</name>
-            <url>http://rtpgsa.ibm.com/home/w/a/wasngi/web/public/maven/</url>
-        </repository>
-    </repositories>
-    
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>io.openliberty.features</groupId>
                 <artifactId>features-bom</artifactId>
-                <version>18.0.0.3</version>
+                <version>RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -56,21 +48,25 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.2.11</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
             <version>2.2.11</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.11</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -113,7 +109,7 @@
                     <assemblyArtifact>
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-kernel</artifactId>
-                        <version>18.0.0.3</version>
+                        <version>RELEASE</version>
                         <type>zip</type>
                     </assemblyArtifact>
                     <configFile>src/main/liberty/config/server.xml</configFile>
@@ -126,6 +122,13 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>install-liberty</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>install-server</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>install-feature</id>
                         <phase>prepare-package</phase>
                         <goals>
@@ -136,13 +139,6 @@
                                 <acceptLicense>true</acceptLicense>
                             </features>
                         </configuration>
-                    </execution>
-                    <execution>
-                        <id>install-liberty</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>install-server</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>install-app</id>
